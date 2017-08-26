@@ -1,14 +1,18 @@
 package com.mohamed.login;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.mohamed.dao.UserDao;
+import com.mohamed.model.User;
 
 @Controller
 public class LoginController {
 
-	
+	@Autowired
+	private UserDao userDao;
 	@RequestMapping(value="/login")
 	public String login(HttpServletRequest request) {
 
@@ -20,7 +24,9 @@ public class LoginController {
 		
 		String password = request.getParameter("password");
 		
-		if(username.equals("mohamed") && password.equals("123456")){
+		List<User> userList = userDao.getUserByUsernameAndPassword(username, password);
+		
+		if(userList != null){
 			return "d.jsp";
 		}
 		else{

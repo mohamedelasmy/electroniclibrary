@@ -5,10 +5,11 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import com.mohamed.model.User;
 
-@Component
+@Repository
 public class UserDaoImpl implements UserDao {
 
 	private SessionFactory sessionFactory;
@@ -35,7 +36,7 @@ public class UserDaoImpl implements UserDao {
 		
 		Session session = this.sessionFactory.openSession();
 
-		List<User> userList = (List<User>) session.createQuery("from user where username = :username and password = :password").list();
+		List<User> userList = (List<User>) session.createQuery("from user").list();
 
 		session.close();
 		
