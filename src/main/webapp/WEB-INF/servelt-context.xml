@@ -10,5 +10,33 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context-2.5.xsd ">
       <ctx:annotation-config></ctx:annotation-config>
-      <ctx:component-scan base-package="com.mohamed.login"></ctx:component-scan>
-      </beans>
+      <ctx:component-scan base-package="com.mohamed"></ctx:component-scan>
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/electronic_library" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean> 
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.mohamed.model.User</value>
+            </list>
+        </property>
+        <property name="hibernateProperties" value="/resources/hibernate.cfg.xml">
+        </property>
+        <property name="mappingResources" value="/com/mohamed/model/User.hbm.xml">
+        </property>
+        
+    </bean>      
+	<bean id="userDao" class="com.mohamed.dao.UserDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    	<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+<!-- 	<tx:annotation-driven/>	 -->
+ </beans>
