@@ -31,14 +31,14 @@ public class LoginController {
 		
 		List<User> userList = userDao.getUserByUsernameAndPassword(username, password1);
 		
-		if(userList != null){
-			return "d.jsp";
+		if(userList.isEmpty()){
+			return "index.jsp";
 		}
 		else{
 			username = "";
 			password = "";
 			request.setAttribute(username, password);
-			return "index.jsp";
+			return "d.jsp";
 			
 		}
 
